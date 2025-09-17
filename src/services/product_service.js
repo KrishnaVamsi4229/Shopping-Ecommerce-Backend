@@ -2,26 +2,33 @@
 
 const products = [];
 
-function createProductService(product){
-    const newProduct = {
-        id : products.length,
-        ...product
+class ProductService{
+    constructor(repository){
+        this.repository = repository;
     }
-    products.push(newProduct);
-    return newProduct;
+    createProductService(product){
+        const newProduct = {
+            id : products.length,
+            ...product
+        }
+        products.push(newProduct);
+        return newProduct;
 
+    }
+
+    getProductId(id){
+        return products.filter(product => product.id == id)[0];
+    }
+
+    // function getProductService(){
+    //     return products;
+    // }
+
+    async getProductService(){
+        const response = await this.repository.getProducts();
+        return response.data;
+    }
 }
 
-function getProductId(id){
-    return products.filter(product => product.id == id)[0];
-}
 
-function getProductService(){
-    return products;
-}
-
-module.exports = {
-    createProductService,
-    getProductService,
-    getProductId,
-}
+module.exports = ProductService;
