@@ -1,21 +1,17 @@
 const { StatusCodes , ReasonPhrases } = require("http-status-codes");
+const { createProductService , getProductService , getProductId } = require("../services/product_service");
 
 function createProduct(request,response){
     try {
         // some db processing
 
+        const res = createProductService(request.body);
+
         return response.status(StatusCodes.CREATED).json({
             success : true,
             error : {},
             message : ReasonPhrases.CREATED + " Product",
-            data : {
-                id : Math.random * (20) ,
-                title : request.body.title,
-                description : request.body.description,
-                category : request.body.category,
-                price : request.body.price,
-                image : request.body.image,
-            }
+            data : res,
 
         })
         
@@ -25,6 +21,49 @@ function createProduct(request,response){
     }
 }
 
+function getProduct(request,response){
+    try {
+        // some db processing
+
+        const res = getProductService(request.body);
+
+        return response.status(StatusCodes.OK).json({
+            success : true,
+            error : {},
+            message : "Successfully fecthed the Product",
+            data : res,
+
+        })
+        
+    } catch (error) {
+        console.log("something went wrong ",error);
+        
+    }
+}
+
+function getProductName(req,res){ //   /api/v1/products/2
+    try {
+        // some db processing
+
+        const response = getProductId(req.params.id);
+
+        return res.status(StatusCodes.OK).json({
+            success : true,
+            error : {},
+            message : "Successfully fecthed the Product",
+            data : response,
+
+        })
+        
+    } catch (error) {
+        console.log("something went wrong ",error);
+        
+    }
+
+}
+
 module.exports = {
     createProduct,
+    getProduct,
+    getProductName,
 }
