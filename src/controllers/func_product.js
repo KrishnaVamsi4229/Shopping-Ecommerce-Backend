@@ -1,4 +1,5 @@
 function funcProduct(request,response){
+    console.log("controller executed");
     return response.json({message : "ok from v1 API"});
 }
 function funcProduct2(request,response){
