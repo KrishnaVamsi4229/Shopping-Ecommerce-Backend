@@ -26,7 +26,7 @@ class ProductService{
 
     async getProductService(){
         const response = await this.repository.getProducts();
-        return response.data;
+        return response;
     }
 }
 
