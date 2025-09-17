@@ -1,14 +1,17 @@
 const express = require('express');
-const mysql = require("mysql2");
-const { PORT , DB_HOST , DB_USER , DB_PASS , DB_NAME } = require('./config/server_config')
+//const mysql = require("mysql2");
+//const { PORT , DB_HOST , DB_USER , DB_PASS , DB_NAME } = require('./config/server_config');
+const { PORT } = require('./config/server_config');
 
-const db = mysql.createConnection({
-    host : DB_HOST,
-    user : DB_USER,
-    password : DB_PASS,
-    database : DB_NAME,
-});
+// const db = mysql.createConnection({
+//     host : DB_HOST,
+//     user : DB_USER,
+//     password : DB_PASS,
+//     database : DB_NAME,
+// });
 
+const db = require('./config/db_config');
+const Category = require("./models/category");
 
 
 const bodyParser = require('body-parser')
@@ -36,22 +39,30 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use("/api", api);
 
 
-app.listen(PORT || 3000 , () => {
+app.listen(PORT || 3000 , async () => {
     console.log(`Server Stared on ${PORT} `);
 
-    db.connect((err) => {
-        if(err){
-            console.log("DB didn't connect");
-            console.log(err);
-            throw err;
-        }
-        console.log("DB connected");
-        db.query("select * from products",(err,result) => {
-            if(err){
-                console.log(err);
-                throw err;
-            }
-            console.log(result);
-        })
-    });
+    // db.connect((err) => {
+    //     if(err){
+    //         console.log("DB didn't connect");
+    //         console.log(err);
+    //         throw err;
+    //     }
+    //     console.log("DB connected");
+    //     db.query("select * from products",(err,result) => {
+    //         if(err){
+    //             console.log(err);
+    //             throw err;
+    //         }
+    //         console.log(result);
+    //     })
+    // });
+
+    await db.sync();
+    console.log("DB CONNECTED");
+    // const res = await Category.create({
+    //     name : "Electronics",
+    //     description : "Category For Electronic Products",
+    // })
+    // console.log(res);
 })
