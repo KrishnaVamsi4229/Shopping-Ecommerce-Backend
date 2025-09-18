@@ -18,6 +18,11 @@ class CategoryService{
         const response = await this.repository.createCategory(name,description);
         return response;
     }
+
+    async  destroyCategory(id){
+        const response = await this.repository.destroyCategory(id);
+        return response;
+    }
 }
 
 module.exports = CategoryService;

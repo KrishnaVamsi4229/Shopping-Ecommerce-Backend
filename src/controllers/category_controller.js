@@ -60,8 +60,26 @@ async function createCategory(request,response){
     }
 }
 
+async function destroyCategory(request,response){
+    try {
+        // some db processing
+
+        const res = await categoryService.destroyCategory(request.params.id);
+
+        return response.status(StatusCodes.OK).json({
+            data : res,
+
+        })
+        
+    } catch (error) {
+        console.log("something went wrong ",error);
+        
+    }
+}
+
 module.exports = {
     createCategory,
     getCategory,
     getAllCategories,
+    destroyCategory,
 }
