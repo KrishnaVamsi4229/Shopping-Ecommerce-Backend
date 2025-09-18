@@ -1,7 +1,7 @@
 const Category = require("../models/category");
 
 class CategoryRepository{
-    async getCategories(){
+    async getAllCategories(){
     try {
         const response = await Category.findAll();
         return response;

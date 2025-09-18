@@ -58,7 +58,7 @@ app.listen(PORT || 3000 , async () => {
     //     })
     // });
 
-    await db.sync();
+    await db.sync({alter : true});
     console.log("DB CONNECTED");
     // const res = await Category.create({
     //     name : "Electronics",
